@@ -6,6 +6,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 
+
 /**
  * Instrumented test, which will execute on an Android device.
  *
@@ -18,5 +19,16 @@ class ExampleInstrumentedTest {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("com.idormy.sms.forwarder", appContext.packageName)
+    }
+
+    @Test
+    fun useAppContext0() {
+        // Context of the app under test.
+//        val serviceAccount = FileInputStream("path/to/serviceAccountKey.json")
+//
+//        val options: FirebaseOptions = FirebaseOptions.Builder()
+//            .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+//            .build()
+//        FirebaseApp.initializeApp(options)
     }
 }

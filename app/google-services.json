@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "614674868475",
+    "project_id": "fcmtest-66c8f",
+    "storage_bucket": "fcmtest-66c8f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:614674868475:android:87b2e519f512c23875685e",
+        "android_client_info": {
+          "package_name": "com.xxc.sms.forwarder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "614674868475-qbjv0tq0dbaf6b1frh7g7o2ggbiduhfm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfxF71tlZLPSHf_l_OZbD7GQcru0Y1IZw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "614674868475-qbjv0tq0dbaf6b1frh7g7o2ggbiduhfm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

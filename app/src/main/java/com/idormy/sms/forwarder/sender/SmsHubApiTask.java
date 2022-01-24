@@ -9,6 +9,11 @@ import com.idormy.sms.forwarder.model.vo.SmsHubVo;
 import com.idormy.sms.forwarder.utils.*;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableEmitter;
 
 /**
  * 主动发送短信轮询任务
@@ -47,17 +52,38 @@ public class SmsHubApiTask extends TimerTask {
             }
             smsHubVo.setChildren(data);
             String url = SettingUtil.getSmsHubApiUrl();
-            HttpUtil.asyncPostJson(TAG, url, smsHubVo, response -> {
-                //HttpUtil.Toast(TAG, "Response：" + response.code() + "，" + responseStr);
-                if (response.code() == 200) {
-                    String responseStr = Objects.requireNonNull(response.body()).string();
-                    List<SmsHubVo> vos = JSON.parseArray(responseStr, SmsHubVo.class);
-                    for (SmsHubVo vo : vos) {
-                        SmsHubActionHandler.handle(TAG, vo);
+            boolean asRetry = data != null && data.size() > 0;
+            Observable.create((ObservableEmitter<Object> emitter) -> {
+                AtomicBoolean isSusess = new AtomicBoolean(false);
+                HttpUtil.asyncPostJson(TAG, url, smsHubVo, response -> {
+                    //HttpUtil.Toast(TAG, "Response：" + response.code() + "，" + responseStr);
+                    if (response.code() == 200) {
+                        isSusess.set(true);
+                        emitter.onComplete();
+                        String responseStr = Objects.requireNonNull(response.body()).string();
+                        List<SmsHubVo> vos = JSON.parseArray(responseStr, SmsHubVo.class);
+                        for (SmsHubVo vo : vos) {
+                            SmsHubActionHandler.handle(TAG, vo);
+                        }
+                        SmsHubActionHandler.putData(smsHubMode, vos.toArray(new SmsHubVo[0]));
                     }
-                    SmsHubActionHandler.putData(smsHubMode, vos.toArray(new SmsHubVo[0]));
+                }, null);
+                if (!asRetry) {
+                    emitter.onError(new RuntimeException("请求接口异常"));
                 }
-            }, null);
+            }).retryWhen((Observable<Throwable> errorObservable) -> errorObservable
+                    .zipWith(Observable.just(
+                            SettingUtil.getRetryDelayTime(1),
+                            SettingUtil.getRetryDelayTime(2),
+                            SettingUtil.getRetryDelayTime(3),
+                            SettingUtil.getRetryDelayTime(4),
+                            SettingUtil.getRetryDelayTime(5)
+                    ), (Throwable e, Integer time) -> time)
+                    .flatMap((Integer delay) -> {
+                        HttpUtil.Toast(TAG, "请求接口异常，" + delay + "秒后重试");
+                        return Observable.timer(delay, TimeUnit.SECONDS);
+                    }))
+                    .subscribe(System.out::println);
         } catch (Exception e) {
             HttpUtil.Toast(TAG, "SmsHubApiTask 执行出错,请检查问题后重新开启" + e.getMessage());
             cancelTimer();
@@ -69,9 +95,34 @@ public class SmsHubApiTask extends TimerTask {
     public static void updateTimer() {
         cancelTimer();
         if (SettingUtil.getSwitchEnableSmsHubApi()) {
+            // FirebaseMessaging messaging = FirebaseMessaging.getInstance();
+            // messaging.getToken().addOnCompleteListener(task -> {
+            // if (task.isSuccessful()) {
+            // String result = task.getResult();
+            //                    SettingUtil.setAddExtraDeviceMark(SettingUtil.getAddExtraDeviceMark() + result);
+            //                     HttpUtil.Toast(TAG, result);
+            // }
+            // });
+            // OkHttpClient okHttpClient = new OkHttpClient();
+            // Request request = new Request.Builder().url(resUrl.toString()).get().build();
+            // Response execute = okHttpClient.newCall(request).execute();
+            // execute.body()
+            // InputStream in = HttpUtil.createGet(
+            //         "https://gitee.com/xingxichen/configs/raw/master/smsforward/google-server.json")
+            //         .getConnection().getInputStream();
+            // FirebaseOptions options = new FirebaseOptions.Builder()
+            //         .setCredentials(GoogleCredentials.fromStream(in))
+            //         .build();
+            // FirebaseApp firebaseApp = FirebaseApp.initializeApp(options);
+            // String send = FirebaseMessaging.getInstance(firebaseApp).send(Message.builder()
+            //         .putData("msg_type", "PowerOff")
+            //         .putData("body", "description for message poweroff from DT background")
+            //         .setTopic("weather")
+            //         .build());
             SmsHubVo.getDevInfoMap(true);
             startTimer();
         } else {
+            SmsHubActionHandler.getData(smsHubMode);
             Log.d(TAG, "Cancel SmsHubApiTaskTimer");
             HttpUtil.Toast(TAG, "Cancel SmsHubApiTaskTimer");
         }

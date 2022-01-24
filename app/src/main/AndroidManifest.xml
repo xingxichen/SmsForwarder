@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.idormy.sms.forwarder"
-    android:installLocation="internalOnly">
+        xmlns:tools="http://schemas.android.com/tools"
+        package="com.idormy.sms.forwarder"
+        android:installLocation="internalOnly">
 
     <uses-permission
-        android:name="android.permission.QUERY_ALL_PACKAGES"
-        tools:ignore="QueryAllPackagesPermission" />
+            android:name="android.permission.QUERY_ALL_PACKAGES"
+            tools:ignore="QueryAllPackagesPermission" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 授予应用程序访问系统开机事件的权限 -->
     <uses-permission
-        android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
-        tools:ignore="ProtectedPermissions" />
+            android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
+            tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        tools:ignore="ScopedStorage" />
+            android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+            tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
@@ -31,15 +31,15 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission
-        android:name="android.permission.BATTERY_STATS"
-        tools:ignore="ProtectedPermissions" />
+            android:name="android.permission.BATTERY_STATS"
+            tools:ignore="ProtectedPermissions" />
     <uses-permission
-        android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
-        tools:ignore="ProtectedPermissions" />
+            android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
+            tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.ACTION_NOTIFICATION_LISTENER_SETTINGS" />
     <uses-permission
-        android:name="android.permission.INSTALL_PACKAGES"
-        tools:ignore="ProtectedPermissions" />
+            android:name="android.permission.INSTALL_PACKAGES"
+            tools:ignore="ProtectedPermissions" />
 
 
     <application
@@ -60,14 +60,14 @@
             android:required="false" />
 
         <meta-data
-            android:name="UPDATE_APP_KEY"
-            android:value="SVSfseesfsf" />
+                android:name="UPDATE_APP_KEY"
+                android:value="SVSfseesfsf" />
         <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="60254fc7425ec25f10f4293e" />
+                android:name="UMENG_APPKEY"
+                android:value="60254fc7425ec25f10f4293e" />
         <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="Umeng" />
+                android:name="UMENG_CHANNEL"
+                android:value="Umeng" />
 
         <activity
             android:name=".MainActivity"
@@ -86,8 +86,8 @@
             <intent-filter>
                 <!--协议部分，随便设置-->
                 <data
-                    android:host="main"
-                    android:scheme="forwarder" />
+                        android:host="main"
+                        android:scheme="forwarder" />
                 <!--下面这几行也必须得设置-->
                 <category android:name="android.intent.category.DEFAULT" />
                 <action android:name="android.intent.action.VIEW" />
@@ -145,11 +145,11 @@
         </receiver>
 
         <service
-            android:name=".service.FrontService"
-            android:enabled="true" />
+                android:name=".service.FrontService"
+                android:enabled="true" />
         <service
-            android:name=".service.BatteryService"
-            android:enabled="true" />
+                android:name=".service.BatteryService"
+                android:enabled="true" />
         <service
             android:name=".service.NotifyService"
             android:enabled="true"
@@ -157,7 +157,18 @@
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
             android:exported="false">
             <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
                 <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+        <service
+                android:name=".service.GoogleNotifyService"
+                android:enabled="true"
+                android:label="@string/app_name"
+                android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
+                android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
