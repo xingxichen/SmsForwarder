@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
@@ -37,12 +38,14 @@ import com.idormy.sms.forwarder.receiver.RebootBroadcastReceiver;
 import com.idormy.sms.forwarder.sender.HttpServer;
 import com.idormy.sms.forwarder.sender.SenderUtil;
 import com.idormy.sms.forwarder.sender.SmsHubApiTask;
+import com.idormy.sms.forwarder.service.MusicService;
 import com.idormy.sms.forwarder.utils.CommonUtil;
 import com.idormy.sms.forwarder.utils.DbHelper;
 import com.idormy.sms.forwarder.utils.Define;
 import com.idormy.sms.forwarder.utils.HttpUtil;
 import com.idormy.sms.forwarder.utils.KeepAliveUtils;
 import com.idormy.sms.forwarder.utils.LogUtil;
+import com.idormy.sms.forwarder.utils.OnePixelManager;
 import com.idormy.sms.forwarder.utils.RuleUtil;
 import com.idormy.sms.forwarder.utils.SettingUtil;
 import com.idormy.sms.forwarder.view.ClearEditText;
@@ -100,11 +103,15 @@ public class SettingActivity extends AppCompatActivity {
         editBatteryLevelAlarm(findViewById(R.id.et_battery_level_alarm_min), findViewById(R.id.et_battery_level_alarm_max), findViewById(R.id.cb_battery_level_alarm_once));
 
         //开机启动
-        checkWithReboot(findViewById(R.id.switch_with_reboot));
+        checkWithReboot(findViewById(R.id.switch_with_reboot), findViewById(R.id.tv_auto_startup));
         //电池优化设置
         batterySetting(findViewById(R.id.layout_battery_setting), findViewById(R.id.switch_battery_setting));
         //不在最近任务列表中显示
         switchExcludeFromRecents(findViewById(R.id.switch_exclude_from_recents));
+        //后台播放无声音乐
+        switchPlaySilenceMusic(findViewById(R.id.switch_play_silence_music));
+        //1像素透明Activity保活
+        switchOnePixelActivity(findViewById(R.id.switch_one_pixel_activity));
         //接口请求失败重试时间间隔
         editRetryDelayTime(findViewById(R.id.et_retry_times), findViewById(R.id.et_delay_time));
 
@@ -426,7 +433,9 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     //开机启动
-    private void checkWithReboot(@SuppressLint("UseSwitchCompatOrMaterialCode") Switch withrebootSwitch) {
+    private void checkWithReboot(@SuppressLint("UseSwitchCompatOrMaterialCode") Switch withrebootSwitch, TextView tvAutoStartup) {
+        tvAutoStartup.setText(getAutoStartTips());
+
         //获取组件
         final ComponentName cm = new ComponentName(this.getPackageName(), RebootBroadcastReceiver.class.getName());
 
@@ -660,6 +669,41 @@ public class SettingActivity extends AppCompatActivity {
                         appTasks.get(0).setExcludeFromRecents(isChecked);
                     }
                 }
+            }
+            Log.d(TAG, "onCheckedChanged:" + isChecked);
+        });
+    }
+
+    //后台播放无声音乐
+    @SuppressLint("ObsoleteSdkInt,UseSwitchCompatOrMaterialCode")
+    private void switchPlaySilenceMusic(Switch switch_play_silence_music) {
+        switch_play_silence_music.setChecked(SettingUtil.getPlaySilenceMusic());
+
+        switch_play_silence_music.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            SettingUtil.switchPlaySilenceMusic(isChecked);
+
+            if (isChecked) {
+                startService(new Intent(context, MusicService.class));
+            } else {
+                stopService(new Intent(context, MusicService.class));
+            }
+            Log.d(TAG, "onCheckedChanged:" + isChecked);
+        });
+    }
+
+    //1像素透明Activity保活
+    @SuppressLint("ObsoleteSdkInt,UseSwitchCompatOrMaterialCode")
+    private void switchOnePixelActivity(Switch switch_one_pixel_activity) {
+        switch_one_pixel_activity.setChecked(SettingUtil.getOnePixelActivity());
+
+        switch_one_pixel_activity.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            SettingUtil.switchOnePixelActivity(isChecked);
+
+            OnePixelManager onePixelManager = new OnePixelManager();
+            if (isChecked) {
+                onePixelManager.registerOnePixelReceiver(this);//注册广播接收者
+            } else {
+                onePixelManager.unregisterOnePixelReceiver(this);
             }
             Log.d(TAG, "onCheckedChanged:" + isChecked);
         });
@@ -945,4 +989,48 @@ public class SettingActivity extends AppCompatActivity {
         return super.onMenuOpened(featureId, menu);
     }
 
+    /**
+     * 获取当前手机品牌
+     *
+     * @return 手机品牌
+     */
+    public static String getAutoStartTips() {
+        String brand = Build.BRAND.toLowerCase();
+        String tips;
+
+        switch (brand) {
+            case "huawei":
+                tips = "华为手机：应用启动管理 -> 关闭应用开关 -> 打开允许自启动";
+                break;
+            case "honor":
+                tips = "荣耀手机：应用启动管理 -> 关闭应用开关 -> 打开允许自启动";
+                break;
+            case "xiaomi":
+                tips = "小米手机：授权管理 -> 自启动管理 -> 允许应用自启动";
+                break;
+            case "oppo":
+                tips = "OPPO手机：权限隐私 -> 自启动管理 -> 允许应用自启动";
+                break;
+            case "vivo":
+                tips = "vivo手机：权限管理 -> 自启动 -> 允许应用自启动";
+                break;
+            case "meizu":
+                tips = "魅族手机：权限管理 -> 后台管理 -> 点击应用 -> 允许后台运行";
+                break;
+            case "samsung":
+                tips = "三星手机：自动运行应用程序 -> 打开应用开关 -> 电池管理 -> 未监视的应用程序 -> 添加应用";
+                break;
+            case "letv":
+                tips = "乐视手机：自启动管理 -> 允许应用自启动";
+                break;
+            case "smartisan":
+                tips = "锤子手机：权限管理 -> 自启动权限管理 -> 点击应用 -> 允许被系统启动";
+                break;
+            default:
+                tips = "未知手机品牌：需要自主查看设置操作";
+                break;
+        }
+
+        return tips;
+    }
 }

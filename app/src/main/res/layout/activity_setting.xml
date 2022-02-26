@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="85dp"
-        android:background="@color/colorBackground">
+        android:background="@color/setting_bg_color">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,7 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:background="@android:color/white"
+                android:background="@color/setting_bar_color"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="15dp">
@@ -90,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:background="@android:color/white"
+                android:background="@color/setting_bar_color"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="15dp">
@@ -174,7 +174,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:background="@android:color/white"
+                android:background="@color/setting_bar_color"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="15dp">
@@ -202,7 +202,7 @@
                     <LinearLayout
                         android:id="@+id/layout_cancel_app_notify"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="25dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -265,7 +265,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:background="@android:color/white"
+                android:background="@color/setting_bar_color"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="15dp">
@@ -306,7 +306,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:background="@android:color/white"
+                android:background="@color/setting_bar_color"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="15dp">
@@ -334,12 +334,8 @@
                     <com.idormy.sms.forwarder.view.ClearEditText
                         android:id="@+id/editText_text_sms_hub_url"
                         android:layout_width="match_parent"
-                        android:layout_height="36dp"
-                        android:background="@drawable/line_bg_white_only_bottom_d8"
-                        app:showEye="true"
-                        app:textColor="@color/tv_black_333333"
-                        app:textColorHint="@color/tv_gray_999999"
-                        app:textSize="14sp" />
+                        android:layout_height="wrap_content"
+                        app:showEye="true" />
                 </LinearLayout>
 
                 <Switch
@@ -380,7 +376,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:background="@android:color/white"
+                android:background="@color/setting_bar_color"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="15dp">
@@ -421,7 +417,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:background="@android:color/white"
+                android:background="@color/setting_bar_color"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="15dp">
@@ -543,17 +539,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:background="@android:color/white"
+                android:background="@color/setting_bar_color"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="15dp">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
-                    android:text="@string/auto_startup"
-                    android:textStyle="bold" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/auto_startup"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_auto_startup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/auto_startup"
+                        android:textSize="9sp"
+                        tools:ignore="SmallSp" />
+                </LinearLayout>
 
                 <Switch
                     android:id="@+id/switch_with_reboot"
@@ -571,7 +581,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:background="@android:color/white"
+                android:background="@color/setting_bar_color"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="15dp">
@@ -612,7 +622,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:background="@android:color/white"
+                android:background="@color/setting_bar_color"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="15dp">
@@ -653,7 +663,89 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:background="@android:color/white"
+                android:background="@color/setting_bar_color"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/play_silence_music"
+                        android:textStyle="bold"
+                        tools:ignore="RelativeOverlap" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/play_silence_music_tips"
+                        android:textSize="9sp"
+                        tools:ignore="SmallSp" />
+                </LinearLayout>
+
+                <Switch
+                    android:id="@+id/switch_play_silence_music"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:textSize="16sp"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@color/setting_bar_color"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/one_pixel_activity"
+                        android:textStyle="bold"
+                        tools:ignore="RelativeOverlap" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/one_pixel_activity_tips"
+                        android:textSize="9sp"
+                        tools:ignore="SmallSp" />
+                </LinearLayout>
+
+                <Switch
+                    android:id="@+id/switch_one_pixel_activity"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:textSize="16sp"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@color/setting_bar_color"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="15dp">
@@ -757,7 +849,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:background="@android:color/white"
+                android:background="@color/setting_bar_color"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="15dp">
@@ -786,7 +878,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:background="@android:color/white"
+                android:background="@color/setting_bar_color"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="15dp">
@@ -828,7 +920,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:background="@android:color/white"
+                android:background="@color/setting_bar_color"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="15dp">
@@ -870,7 +962,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:background="@android:color/white"
+                android:background="@color/setting_bar_color"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="15dp">
@@ -912,7 +1004,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:background="@android:color/white"
+                android:background="@color/setting_bar_color"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
                 android:padding="15dp"
@@ -956,65 +1048,80 @@
                     <Button
                         android:id="@+id/bt_insert_sender"
                         android:layout_width="match_parent"
-                        android:layout_height="25dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@color/colorPrimary"
+                        android:minWidth="0dp"
+                        android:minHeight="0dp"
                         android:onClick="toInsertLabel"
+                        android:padding="3dp"
+                        android:singleLine="true"
                         android:text="@string/insert_sender"
+                        android:textSize="11sp"
+                        app:backgroundTint="@color/colorBlueGrey"
                         tools:ignore="ButtonStyle,NestedWeights,UsingOnClickInXml" />
 
                     <Button
                         android:id="@+id/bt_insert_content"
                         android:layout_width="match_parent"
-                        android:layout_height="25dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
                         android:layout_weight="1"
-                        android:background="@color/colorPrimary"
+                        android:minWidth="0dp"
+                        android:minHeight="0dp"
                         android:onClick="toInsertLabel"
+                        android:padding="3dp"
+                        android:singleLine="true"
                         android:text="@string/insert_content"
+                        android:textSize="11sp"
+                        app:backgroundTint="@color/colorBlueGrey"
                         tools:ignore="ButtonStyle,NestedWeights,UsingOnClickInXml" />
 
                     <Button
                         android:id="@+id/bt_insert_extra"
                         android:layout_width="match_parent"
-                        android:layout_height="25dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
                         android:layout_weight="1"
-                        android:background="@color/colorPrimary"
+                        android:minWidth="0dp"
+                        android:minHeight="0dp"
                         android:onClick="toInsertLabel"
+                        android:padding="3dp"
+                        android:singleLine="true"
                         android:text="@string/insert_extra"
+                        android:textSize="11sp"
+                        app:backgroundTint="@color/colorBlueGrey"
                         tools:ignore="ButtonStyle,NestedWeights,UsingOnClickInXml" />
 
                     <Button
                         android:id="@+id/bt_insert_time"
                         android:layout_width="match_parent"
-                        android:layout_height="25dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
                         android:layout_weight="1"
-                        android:background="@color/colorPrimary"
+                        android:minWidth="0dp"
+                        android:minHeight="0dp"
                         android:onClick="toInsertLabel"
+                        android:padding="3dp"
+                        android:singleLine="true"
                         android:text="@string/insert_time"
+                        android:textSize="11sp"
+                        app:backgroundTint="@color/colorBlueGrey"
                         tools:ignore="ButtonStyle,NestedWeights,UsingOnClickInXml" />
 
                     <Button
                         android:id="@+id/bt_insert_device_name"
                         android:layout_width="match_parent"
-                        android:layout_height="25dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
                         android:layout_weight="1"
-                        android:background="@color/colorPrimary"
+                        android:minWidth="0dp"
+                        android:minHeight="0dp"
                         android:onClick="toInsertLabel"
+                        android:padding="3dp"
+                        android:singleLine="true"
                         android:text="@string/insert_device_name"
+                        android:textSize="11sp"
+                        app:backgroundTint="@color/colorBlueGrey"
                         tools:ignore="ButtonStyle,NestedWeights,UsingOnClickInXml" />
 
                 </LinearLayout>
@@ -1025,7 +1132,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:background="@android:color/white"
+                android:background="@color/setting_bar_color"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="15dp">

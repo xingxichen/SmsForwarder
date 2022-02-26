@@ -21,6 +21,9 @@
     <string name="rule_tips">提示：新建规则点击“添加”，长按删除/克隆，点击编辑已有</string>
     <string name="sender_tips">提示：新建发送通道点击“添加”，长按删除/克隆，点击编辑已有</string>
     <string name="app_tips">提示：点击复制APP的包名，长按则启动并跳转该APP</string>
+    <string name="clear_logs">清空日志</string>
+    <string name="add_rule">清空日志</string>
+    <string name="add_sender">添加发送通道</string>
     <!--AboutActivity-->
     <string name="version">当前版本</string>
     <string name="check_for_updates">检查新版本</string>
@@ -141,9 +144,13 @@
     <string name="email_title">邮件主题</string>
     <string name="feishu_webhook">Webhook 地址</string>
     <string name="feishu_secret">加签 Secret (没有可不填)</string>
+    <string name="feishu_msg_type">消息类型</string>
+    <string name="feishu_msg_type_text">纯文本</string>
+    <string name="feishu_msg_type_interactive">消息卡片</string>
+    <string name="feishu_msg_type_interactive_title">标题模板</string>
     <string name="Corp_ID">企业ID</string>
-    <string name="Agent_ID">应用AgentId</string>
-    <string name="App_Secret">应用Secret</string>
+    <string name="Agent_ID">AgentId</string>
+    <string name="App_Secret">Secret</string>
     <string name="is_at_all">是否@all</string>
     <string name="specified_member">指定成员</string>
     <string name="at_all">\@all</string>
@@ -151,7 +158,7 @@
     <string name="QYWXGroupRobotWebHook">WebHook地址</string>
     <string name="QYWXGroupRobotWebHookTips">示例：https://qyapi.weixin.qq.com/cgixx?key=xxx</string>
     <string name="ServerChanSendKey">Server酱·Turbo版的SendKey</string>
-    <string name="TelegramApiToken">Telegram机器人的ApiToken 或 自定义地址(http开头)</string>
+    <string name="TelegramApiToken">Tg机器人的 ApiToken 或 自定义地址(http开头)</string>
     <string name="TelegramChatId">被通知人(或群组)的ChatId</string>
     <string name="Method" formatted="false">请求方式</string>
     <string name="WebNotifyWebServer">WebServer</string>
@@ -172,7 +179,7 @@
     <string name="low_power_alarm_threshold">电量预警(%)</string>
     <string name="low_power_alarm_threshold_tips">取值：0–99，0禁用</string>
     <string name="retry_interval">请求接口失败重试</string>
-    <string name="retry_interval_tips">次数=0时禁用，间隔逐次递增</string>
+    <string name="retry_interval_tips">次数=0禁用，间隔逐次递增</string>
     <string name="forward_sms">转发短信广播</string>
     <string name="forward_sms_tips">请授予读取短信、通知类短信、发送短信等权限，关闭验证码保护</string>
     <string name="forward_missed_calls">转发通话记录</string>
@@ -320,7 +327,7 @@
     <string name="battery_monitor">电池监控</string>
     <string name="battery_monitor_tips">【注意】需要手动创建APP转发规则，包名：88888888</string>
     <string name="keep_alive">保活措施</string>
-    <string name="keep_alive_tips">建议开启每一项授权或设置，不要禁用通知栏，避免APP被杀</string>
+    <string name="keep_alive_tips">建议开启前三项授权或设置，不要禁用通知栏，避免APP被杀</string>
     <string name="custom_settings">个性设置</string>
     <string name="custom_settings_tips">如果自动获取失败，请手动填写备注 或 清空后再次自动获取</string>
     <string name="times">次</string>
@@ -426,4 +433,9 @@
     <string name="toast_denied_never">被永久拒绝授权，请前往系统设置手动授予权限！</string>
     <string name="toast_denied">获取必需的权限失败，APP功能可能受限！</string>
     <string name="tips_first_time">\n&#160;&#160;&#160;&#160;首次使用请按照1234步骤顺序设置，数字点亮表示该步骤已设置(4点亮表示有成功日志)！\n\n&#160;&#160;&#160;&#160;根据以往用户反馈，90%的新用户最终排查结果都是手机权限设置问题，5%的用户是APP保活问题，其他问题排查参考Wiki中的常见问题（APP右上角使用帮助入口）\n\n&#160;&#160;&#160;&#160;强烈建议：手动排查一下系统设置：自启动、电源策略、APP的权限，把所有权限打开（始终允许，不要“使用中允许”，MIUI系统就全部变绿），特别是一些国产定制系统加入隐私保护、验证码保护等（例如：MIUI 系统的 空白通行证）\n\n&#160;&#160;&#160;&#160;请选择是否立即“前往系统设置”检查，或“稍后自行处理”？</string>
+    <string name="play_silence_music">后台播放无声音乐</string>
+    <string name="play_silence_music_tips">【按需启用】播放无声音乐让后台一直运行，可能比较耗电</string>
+    <string name="one_pixel">1像素</string>
+    <string name="one_pixel_activity">1像素透明Activity保活</string>
+    <string name="one_pixel_activity_tips">【按需启用】使进程的优先级在屏幕锁屏时间由4提升为最高优先级1</string>
 </resources>

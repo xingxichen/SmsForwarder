@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import com.alibaba.fastjson.JSON;
 import com.idormy.sms.forwarder.utils.Define;
 import com.idormy.sms.forwarder.utils.LogUtil;
-import com.idormy.sms.forwarder.utils.SettingUtil;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -90,7 +89,7 @@ public class SenderFeishuMsg extends SenderBaseMsg {
             "  }\n" +
             "}";
 
-    public static void sendMsg(final long logId, final Handler handError, final RetryIntercepter retryInterceptor, String webhook, String secret, String from, Date date, String content) throws Exception {
+    public static void sendMsg(final long logId, final Handler handError, final RetryIntercepter retryInterceptor, String webhook, String secret, String msgType, String from, Date date, String title, String content) throws Exception {
         Log.i(TAG, "sendMsg webhook:" + webhook + " secret:" + secret + " content:" + content);
 
         if (webhook == null || webhook.isEmpty()) {
@@ -117,11 +116,18 @@ public class SenderFeishuMsg extends SenderBaseMsg {
         }
 
         //组装报文
-        textMsgMap.put("msg_type", "interactive");
-        textMsgMap.put("card", "${CARD_BODY}");
+        if (msgType == null || msgType.equals("interactive")) {
+            textMsgMap.put("msg_type", "interactive");
+            textMsgMap.put("card", "${CARD_BODY}");
+        } else {
+            textMsgMap.put("msg_type", "text");
+            Map contentMap = new HashMap();
+            contentMap.put("text", content);
+            textMsgMap.put("content", contentMap);
+        }
 
         Log.i(TAG, "requestUrl:" + webhook);
-        final String requestMsg = JSON.toJSONString(textMsgMap).replace("\"${CARD_BODY}\"", buildMsg(from, date, content));
+        final String requestMsg = JSON.toJSONString(textMsgMap).replace("\"${CARD_BODY}\"", buildMsg(from, date, title, content));
         Log.i(TAG, "requestMsg:" + requestMsg);
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
@@ -166,8 +172,9 @@ public class SenderFeishuMsg extends SenderBaseMsg {
 
     }
 
-    private static String buildMsg(String from, Date date, String content) {
-        String msgTitle = jsonInnerStr("【" + SettingUtil.getAddExtraDeviceMark().trim() + "】来自" + from + "的通知");
+    private static String buildMsg(String from, Date date, String title, String content) {
+        //if (TextUtils.isEmpty(title)) title = "【" + SettingUtil.getAddExtraDeviceMark().trim() + "】来自" + from + "的通知";
+        String msgTitle = jsonInnerStr(title);
         String msgTime = jsonInnerStr(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(date));
         String msgFrom = jsonInnerStr(from);
         String msgContent = jsonInnerStr(content);

@@ -9,6 +9,7 @@ import com.idormy.sms.forwarder.model.vo.SmsVo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -156,14 +157,14 @@ class RuleLine {
                     } else {
                         //生成了一个中间体
                         middleList.add(buildMiddleWord.toString());
-                        logg("get Middle++:" + buildMiddleWord.toString());
+                        logg("get Middle++:" + buildMiddleWord);
 
                         buildMiddleWord = new StringBuilder();
                     }
                 } else {
                     //把w拼接到中间体上
                     buildMiddleWord.append(w);
-                    logg("buildMiddleWord length:" + buildMiddleWord.length() + "buildMiddleWord:" + buildMiddleWord.toString());
+                    logg("buildMiddleWord length:" + buildMiddleWord.length() + "buildMiddleWord:" + buildMiddleWord);
 
                 }
             }
@@ -174,7 +175,7 @@ class RuleLine {
             }
 
         }
-        logg("isDealValue done valueBuilder:" + valueBuilder.toString());
+        logg("isDealValue done valueBuilder:" + valueBuilder);
 
 
         if (middleList.size() != 4) {
@@ -338,7 +339,14 @@ class RuleLine {
             case CHECK_REGEX:
                 if (msgValue != null) {
                     try {
-                        checked = Pattern.matches(this.value, msgValue);
+                        //checked = Pattern.matches(this.value, msgValue);
+                        Pattern pattern = Pattern.compile(this.value, Pattern.CASE_INSENSITIVE);
+                        Matcher matcher = pattern.matcher(msgValue);
+                        //noinspection LoopStatementThatDoesntLoop
+                        while (matcher.find()) {
+                            checked = true;
+                            break;
+                        }
                     } catch (PatternSyntaxException e) {
                         logg("PatternSyntaxException: ");
                         logg("Description: " + e.getDescription());

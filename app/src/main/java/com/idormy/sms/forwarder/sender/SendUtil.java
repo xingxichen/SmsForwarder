@@ -244,7 +244,7 @@ public class SendUtil {
                     WebNotifySettingVo webNotifySettingVo = JSON.parseObject(senderModel.getJsonSetting(), WebNotifySettingVo.class);
                     if (webNotifySettingVo != null) {
                         try {
-                            SenderWebNotifyMsg.sendMsg(logId, handError, retryInterceptor, webNotifySettingVo.getWebServer(), webNotifySettingVo.getWebParams(), webNotifySettingVo.getSecret(), webNotifySettingVo.getMethod(), smsVo.getMobile(), smsVo.getSmsVoForSend(smsTemplate, regexReplace));
+                            SenderWebNotifyMsg.sendMsg(logId, handError, retryInterceptor, webNotifySettingVo.getWebServer(), webNotifySettingVo.getWebParams(), webNotifySettingVo.getSecret(), webNotifySettingVo.getMethod(), smsVo, smsTemplate, regexReplace);
                         } catch (Exception e) {
                             LogUtil.updateLog(logId, 0, e.getMessage());
                             Log.e(TAG, "senderSendMsg: SenderWebNotifyMsg error " + e.getMessage());
@@ -346,7 +346,7 @@ public class SendUtil {
                     FeiShuSettingVo feiShuSettingVo = JSON.parseObject(senderModel.getJsonSetting(), FeiShuSettingVo.class);
                     if (feiShuSettingVo != null) {
                         try {
-                            SenderFeishuMsg.sendMsg(logId, handError, retryInterceptor, feiShuSettingVo.getWebhook(), feiShuSettingVo.getSecret(), smsVo.getMobile(), smsVo.getDate(), smsVo.getSmsVoForSend(smsTemplate, regexReplace));
+                            SenderFeishuMsg.sendMsg(logId, handError, retryInterceptor, feiShuSettingVo.getWebhook(), feiShuSettingVo.getSecret(), feiShuSettingVo.getMsgType(), smsVo.getMobile(), smsVo.getDate(), smsVo.getTitleForSend(feiShuSettingVo.getTitleTemplate()), smsVo.getSmsVoForSend(smsTemplate, regexReplace));
                         } catch (Exception e) {
                             LogUtil.updateLog(logId, 0, e.getMessage());
                             Log.e(TAG, "senderSendMsg: feishu error " + e.getMessage());
@@ -361,7 +361,7 @@ public class SendUtil {
                     PushPlusSettingVo pushPlusSettingVo = JSON.parseObject(senderModel.getJsonSetting(), PushPlusSettingVo.class);
                     if (pushPlusSettingVo != null) {
                         try {
-                            SenderPushPlusMsg.sendMsg(logId, handError, retryInterceptor, pushPlusSettingVo, smsVo.getMobile(), smsVo.getSmsVoForSend(smsTemplate, regexReplace));
+                            SenderPushPlusMsg.sendMsg(logId, handError, retryInterceptor, pushPlusSettingVo, smsVo.getTitleForSend(pushPlusSettingVo.getTitleTemplate()), smsVo.getSmsVoForSend(smsTemplate, regexReplace));
                         } catch (Exception e) {
                             LogUtil.updateLog(logId, 0, e.getMessage());
                             Log.e(TAG, "senderSendMsg: feishu error " + e.getMessage());
